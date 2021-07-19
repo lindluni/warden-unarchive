@@ -6,43 +6,31 @@ const {octokit} = require('./lib/auth')
 const {getRepoID, unarchiveRepo} = require('./lib/queries')
 
 async function readCSV(filename) {
-    try {
-        core.info(`Reading repository list from ${filename}`)
-        const file = await fs.readFileSync(filename, 'utf8');
-        const lines = file.split('\n');
-        return lines.map(line => {
-            const repo = line.split(',')
-            return {
-                org: repo[0],
-                name: repo[1]
-            }
-        });
-    } catch (e) {
-        throw e
-    }
+    core.info(`Reading repository list from ${filename}`)
+    const file = await fs.readFileSync(filename, 'utf8');
+    const lines = file.split('\n');
+    return lines.map(line => {
+        const repo = line.split(',')
+        return {
+            org: repo[0],
+            name: repo[1]
+        }
+    });
 }
 
 async function getRepoState(org, repo) {
-    try {
-        core.info(`Retrieving repository state and ID for ${org}/${repo}`)
-        return await octokit.graphql(getRepoID, {
-            org: org,
-            repo: repo
-        })
-    } catch (e) {
-        throw e
-    }
+    core.info(`Retrieving repository state and ID for ${org}/${repo}`)
+    return await octokit.graphql(getRepoID, {
+        org: org,
+        repo: repo
+    })
 }
 
 async function unarchive(repoID) {
-    try {
-        core.info(`Unarchiving repository with ID ${repoID}`)
-        return await octokit.graphql(unarchiveRepo, {
-            repoID: repoID
-        })
-    } catch (e) {
-        throw e
-    }
+    core.info(`Unarchiving repository with ID ${repoID}`)
+    return await octokit.graphql(unarchiveRepo, {
+        repoID: repoID
+    })
 }
 
 
