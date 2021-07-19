@@ -35,20 +35,24 @@ async function unarchive(repoID) {
 
 
 async function main() {
-    const _file = core.getInput('file', {required: true})
-    const repos = await readCSV(_file)
-    for (const repo of repos) {
-        const state = await getRepoState(repo.org, repo.name)
-        if (state.repository.isArchived) {
-            const unarchivedState = await unarchive(state.repository.id)
-            if (!unarchivedState.unarchiveRepository.repository.isArchived) {
-                core.info(`Successfully unarchived ${repo.org}/${repo.name}`)
-            } else {
-                core.warning(`Failed unarchiving ${repo.org}/${repo.name}`)
+    try {
+        const _file = core.getInput('file', {required: true})
+        const repos = await readCSV(_file)
+        for (const repo of repos) {
+            const state = await getRepoState(repo.org, repo.name)
+            if (state.repository.isArchived) {
+                const unarchivedState = await unarchive(state.repository.id)
+                if (!unarchivedState.unarchiveRepository.repository.isArchived) {
+                    core.info(`Successfully unarchived ${repo.org}/${repo.name}`)
+                } else {
+                    core.warning(`Failed unarchiving ${repo.org}/${repo.name}`)
+                }
+                continue
             }
-            continue
+            core.info(`Skipping non-archived repo ${repo.org}/${repo.name}`)
         }
-        core.info(`Skipping non-archived repo ${repo.org}/${repo.name}`)
+    } catch (e) {
+        core.setFailed(`Error: ${e}`)
     }
 }
 
