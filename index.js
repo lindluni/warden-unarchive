@@ -52,7 +52,7 @@ async function main() {
             core.info(`Skipping non-archived repo ${repo.org}/${repo.name}`)
         }
     } catch (e) {
-        core.setFailed(`Error: ${e}`)
+        core.setFailed(e)
     }
 }
 
