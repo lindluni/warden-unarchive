@@ -1,0 +1,14 @@
+name: Unarchive Repositories
+author: Brett Logan
+description: A GitHub action for bulk unarchiving repositories from a file
+inputs:
+  token:
+    description: 'GitHub admin PAT'
+    required: true
+  file:
+    description: 'CSV list of repositories checked into your repo to unarchive in the format: owner,repo'
+    required: true
+    default: 'repos.csv'
+runs:
+  using: node12
+  main: dist/index.js

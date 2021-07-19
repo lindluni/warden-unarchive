@@ -1,0 +1,21 @@
+{
+  "name": "warden-unarchive",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@octokit/plugin-retry": "^3.0.9",
+    "@octokit/plugin-throttling": "^3.5.1",
+    "@octokit/rest": "^18.6.7",
+    "csv": "^5.5.0",
+    "csv-parse": "^4.16.0",
+    "fs-extra": "^10.0.0"
+  }
+}
