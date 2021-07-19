@@ -15,6 +15,10 @@ async function readCSV(filename) {
             org: repo[0],
             name: repo[1]
         }
+    }).filter(repo => {
+        if (repo.org !== '') {
+            return repo
+        }
     });
 }
 
